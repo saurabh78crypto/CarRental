@@ -1,10 +1,16 @@
-const dotenv = require('dotenv');
 const express = require('express');
 const app = express();
+const dotenv = require('dotenv');
 
-dotenv.config({path:'./config.env'});
 require('./db/conn');
+dotenv.config({path:'./config.env'});
 
+app.use(express.json());
+
+// const User = require('./model/userSchema');
+
+//link the router file to make route easy
+app.use(require('./router/auth'));
 
 //Middleware
 const middleware = (req, res, next) =>{
@@ -18,7 +24,7 @@ const middleware = (req, res, next) =>{
 
 
 app.get('/', (req, res) => {
-     res.send('Hello World from the server');
+     res.send('Hello World from the server app.js');
 });
 
 app.get('/about', middleware, (req, res) => {
