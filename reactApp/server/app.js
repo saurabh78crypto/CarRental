@@ -43,6 +43,6 @@ app.get('/signup', (req, res) => {
     res.send('Hello SignUp World from the server');
 });
 
-app.listen(3000, () =>{
-    console.log('server is runnning at port no 3000');
+app.listen(5000, () =>{
+    console.log('server is runnning at port no 5000');
 })
