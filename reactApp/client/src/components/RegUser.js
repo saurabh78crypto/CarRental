@@ -18,7 +18,7 @@ const RegUser = () => {
       e.preventDefault();
 
       const {name, email, phone, password, cpassword} = user;
-
+     
       const res = await fetch('/register', {
         method:'POST',
         headers: { 'Content-Type' : 'application/json' },

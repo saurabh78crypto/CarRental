@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 require('../db/conn');
 const User = require('../model/userSchema');
 
+const vehicleUser = require('../model/vehicleSchema');
+
 router.get('/', (req, res) => {
     res.send('Hello World from the server router.js');
 });
@@ -47,6 +49,44 @@ router.post('/register', async (req, res) => {
     }
    
 });
+
+//Vechile Registration
+router.post('/regVehicle', async (req, res) => {
+
+    const {email, phone, vehicleNumber, password, cpassword} = req.body;
+
+    if(!email || !phone || !vehicleNumber || !password || !cpassword){
+        return res.status(422).json({error:'Field is empty!'});
+    }
+    
+    try{
+
+        const vecUserExist = await vehicleUser.findOne({email:email});
+
+        if(vecUserExist){
+            return res.status(422).json({error:"Vehicle already registered!"});
+        }else if(password != cpassword){
+
+            return res.status(422).json({error:"Password are not same!"});
+
+        }else{
+
+            const vechUser = new vehicleUser({ email, phone,vehicleNumber, password, cpassword});
+
+            await vechUser.save();
+            
+            res.status(201).json({message:'Vehicle registered successfully!'});
+
+    
+        }
+        
+    }catch(err){
+        console.log(err);
+    }
+
+
+
+})
 
 
 //user login
