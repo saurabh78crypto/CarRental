@@ -28,44 +28,54 @@ const Login = () => {
 
   return (
     <>
-      <section className='sign-in'>
-        <div className='container mt-5'>
-          <div className='signin-content'>
-          <div className='signup-image'>
-              <figure>
-                <img src={loginImg} alt="login image" width='200px' height='200px'/>
-              </figure>
-              <a href="/reguser" className='signup-image-link'> Don't have an account? Create Now! </a>                   
-          </div>
-            <div className='signin-form'>
-                <h2 className='form-title'>Login User</h2>
-                <form method='POST' className='register-form' id='register-form'>
-                  <div className='form-group'>
-                      <label htmlFor="email">
-                      <i class="zmdi zmdi-account material-icons-email"></i>
-                      <input type="email" name='email' id='email' autoComplete='off' 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder='Your Email'/>
-                      </label>
-                  </div>
+      <section class="sign-in">
+        <div class="container">
+          <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src={loginImg} alt="sing up image"/></figure>
+                <a href="/reguser" class="signup-image-link">Create an account</a>
+                <a href="/regvehicle" class="signup-image-link">Register Vehicle</a>
+            </div>
 
-                  <div className='form-group'>
-                      <label htmlFor="password">
-                      <i class="zmdi zmdi-lock material-icons-password"></i>
-                      <input type="password" name='password' id='password' autoComplete='off' 
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder='Your Password'/>
-                      </label>
-                  </div>
-
-                  <div className='form-group form-button'>
-                      <input type="submit" name='signin' id='signin' className='form-submit' value='Log In' onClick={loginUser}/>
-                  </div>
-                </form>
+            <div class="signin-form">
+              <h2 class="form-title">Sign In</h2>
+              <form method="POST" class="register-form" id="login-form">
+                <div class="form-group">
+                    <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                    <input type="text" name="your_name" id="your_name" placeholder="Your Name"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    />
                 </div>
-          </div>    
+
+                <div class="form-group">
+                    <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                    <input type="password" name="password" id="your_pass" placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                    <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                </div>
+
+                <div class="form-group form-button">
+                    <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" onClick={loginUser}/>
+                </div>
+              </form>
+
+              <div class="social-login">
+                  <span class="social-label">Or login with</span>
+                  <ul class="socials">
+                      <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                      <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                      <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

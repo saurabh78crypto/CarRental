@@ -1,116 +1,115 @@
-import React, {useState} from 'react'
-import { NavLink, useHistory } from 'react-router-dom'
 import reguserImg from '../images/reguser.jpg'
+import { useFormik } from 'formik' 
+import { signUPSchema } from '../schemas';
+
+//  const User = require('');
+
+const initialValues = {
+  name:"",
+  email:"",
+  password:"",
+  cpassword:""
+};
 
 const RegUser = () => {
-  const history = useHistory();
-  const [user, setUser] = useState({ name:"",email:"",phone:"",password:"",cpassword:"" });
 
-  let name, value;
-  const handleInputs = (e) => {
-      console.log(e);
-      name = e.target.name;
-      value = e.target.value;
-      setUser({...user, [name]:value })
-  }
+  const {values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
+      initialValues,
+      validationSchema: signUPSchema,
+      onSubmit : (values, action) => {
 
-  const postData = async (e) => {
-      e.preventDefault();
+        const newUser = new User({
+          name:values.name,
+          email:values.email,
+          password:values.password,
+          cpassword:values.cpassword,
+        });
 
-      const {name, email, phone, password, cpassword} = user;
-     
-      const res = await fetch('/register', {
-        method:'POST',
-        headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify({ name, email, phone, password, cpassword })
-      });
-
-      const data = await res.json();
-
-      if(res.status === 422 || !data){
-        window.alert("Invalid Registration!");
-      }else{
-        window.alert(" Registration Successful!");
-        history.push('/login');
-      }
-  }
+        newUser.save( (err) => {
+            if(err) {
+              window.alert('Invalid Registration',err);
+            } else{
+              window.alert('Register Successfully');
+            }
+        })
+        
+        action.resetForm();
+        
+      },
+    });
+  
 
   return (
     <>
-      <section className='reguser'>
-        <div className='container mt-5'>
-          <div className='reguser-content'>
-            <div className='reguser-form'>
-                <h2 className='form-title'>Register User</h2>
-                <form method='POST' className='register-form' id='register-form'>
+      <section className="signup">
+            <div className="container">
+                <div className="signup-content">
+                    <div className="signup-form">
+                        <h2 className="form-title">Sign up</h2>
+                        <form method="POST" onSubmit={handleSubmit} className="register-form" id="register-form">
 
-                  <div className='form-group'>
-                      <label htmlFor="name">
-                      <i class="zmdi zmdi-account material-icons-name"></i>
-                      <input type="text" name='name' id='name' autoComplete='off'
-                        value={user.name}
-                        onChange={handleInputs}
-                      placeholder='Your Name'/>
-                      </label>
-                  </div>
+                            <div className="form-group">
+                                <label for="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="name" id="name"
+                                value={values.name}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                placeholder="Your Name"/>
 
-                  <div className='form-group'>
-                      <label htmlFor="email">
-                      <i class="zmdi zmdi-account material-icons-email"></i>
-                      <input type="email" name='email' id='email' autoComplete='off'
-                        value={user.email}
-                        onChange={handleInputs}
-                      placeholder='Your Email'/>
-                      </label>
-                  </div>
+                                { errors.name && touched.name ?  <p className='form-error'>{ errors.name }</p> : null}  
+                            </div>
 
-                  <div className='form-group'>
-                      <label htmlFor="phone">
-                      <i class="zmdi zmdi-phone-in-talk material-icons-phone"></i>
-                      <input type="number" name='phone' id='phone' autoComplete='off'
-                        value={user.phone}
-                        onChange={handleInputs}
-                      placeholder='Your Phone Number'/>
-                      </label>
-                  </div>
+                            <div className="form-group">
+                                <label for="email"><i className="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                placeholder="Your Email"/>
 
-                  <div className='form-group'>
-                      <label htmlFor="password">
-                      <i class="zmdi zmdi-lock material-icons-password"></i>
-                      <input type="password" name='password' id='password' autoComplete='off'
-                        value={user.password}
-                        onChange={handleInputs}
-                      placeholder='Your Password'/>
-                      </label>
-                  </div>
+                                { errors.email && touched.email ?  <p className='form-error'>{ errors.email }</p> : null}
+                            </div>
 
-                  <div className='form-group'>
-                      <label htmlFor="cpassword">
-                      <i class="zmdi zmdi-lock material-icons-cpassword"></i>
-                      <input type="password" name='cpassword' id='cpassword' autoComplete='off'
-                        value={user.cpassword}
-                        onChange={handleInputs}
-                      placeholder='Confirm Your Password'/>
-                      </label>
-                  </div>
-                  <div className='form-group form-button'>
-                      <input type="submit" name='signup' id='signup' className='form-submit' value='Register' onClick={postData}/>
-                  </div>
-                </form>
+                            <div className="form-group">
+                                <label for="password"><i className="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="pass"
+                                value={values.password}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                placeholder="Password"/>
+
+                                { errors.password && touched.password ?  <p className='form-error'>{ errors.password }</p> : null}
+                            </div>
+
+                            <div className="form-group">
+                                <label for="cpassword"><i className="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="cpassword" id="re_pass"
+                                value={values.cpassword}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                placeholder="Repeat your password"/>
+
+                                { errors.cpassword && touched.cpassword ?  <p className='form-error'>{ errors.cpassword }</p> : null}
+                            </div>
+
+                            <div className="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
+                                <label for="agree-term" className="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" className="term-service">Terms of service</a></label>
+                            </div>
+
+                            <div className="form-group form-button">
+                                <input type="submit" name="signup" id="signup" className="form-submit" value="Register"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="signup-image">
+                        <figure><img src={reguserImg} alt="sing up image"/></figure>
+                        <a href='/login' className="signup-image-link">I am already member</a>
+                    </div>
                 </div>
-                <div className='signup-image'>
-                    <figure>
-                      <img src={reguserImg} alt="registration image" width='200px' height='200px'/>
-                    </figure>
-                    
-                    <a href="/login" className='signup-image-link'> Already registered? Login Now! </a>
-                    
-                </div>
-
-            
-          </div>    
-        </div>
-      </section>
+            </div>
+        </section>
+      
     </>
   )
 }

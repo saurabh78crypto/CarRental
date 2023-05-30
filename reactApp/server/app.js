@@ -3,6 +3,8 @@ const app = express();
 const dotenv = require('dotenv');
 
 require('./db/conn');
+
+
 dotenv.config({path:'./config.env'});
 
 app.use(express.json());

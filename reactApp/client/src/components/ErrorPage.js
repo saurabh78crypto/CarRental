@@ -13,7 +13,7 @@ const ErrorPage = () => {
         <p className='mb-5'>
             The page you are looking for might have been removed had its name changed or is temporarily unavailable
         </p>
-        <a href="/">Back To Homepage</a>
+        <a href="/login">Back To Homepage</a>
       </div>
     </>
   )
