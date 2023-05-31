@@ -29,11 +29,11 @@ app.get('/signin', (req, res) => {
     res.send('Hello SignIn World from the server');
 });
 
-app.get('/reguser', (req, res) => {
+app.get('/signup', (req, res) => {
     res.send('Hello RegUser World from the server');
 });
 
-app.get('/regvehicle', (req, res) => {
+app.get('/signupvec', (req, res) => {
     res.send('Hello RegVehicle World from the server');
 });
 

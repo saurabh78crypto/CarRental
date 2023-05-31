@@ -8,9 +8,40 @@ const User = require('../model/userSchema');
 
 const vehicleUser = require('../model/vehicleSchema');
 
-router.get('/', (req, res) => {
-    res.send('Hello World from the server router.js');
+// router.get('/', (req, res) => {
+//     res.send('Hello World from the server router.js');
+// });
+
+//user login
+router.post('/login', async (req, res) => {
+    try{
+        let token;
+        const {email, password} = req.body;
+        if(!email || !password){
+            return res.status(400).json({error:'Fields are empty!'});
+        }
+        const userLogin = await User.findOne({email:email});
+        if(userLogin) {
+            const isMatch = await bcrypt.compare(password, userLogin.password);
+            token = await userLogin.generateAuthToken();
+            console.log(token);
+            res.cookie("loginToken", token, {
+                expires:new Date(Date.now() + 25892000000),//30 days
+                httpOnly:true
+            });
+            if(!isMatch){
+                res.status(400).json({error:'Invalid Credentials!'});
+            }else{
+                res.json({message:'User signin successfully'});
+            } 
+        }else {
+            res.status(400).json({error:'Invalid Credentials!'});
+        }
+    }catch (err) {
+        console.log(err);
+    }
 });
+
 
 //registering the new user
 router.post('/regUser', async (req, res) => {
@@ -89,49 +120,6 @@ router.post('/regVehicle', async (req, res) => {
 })
 
 
-//user login
-router.post('/signin', async (req, res) => {
-    try{
-        let token;
-
-        const {email, password} = req.body;
-
-        if(!email || !password){
-            return res.status(400).json({error:'Fields are empty!'});
-        }
-
-        const userLogin = await User.findOne({email:email});
-
-        // console.log(userLogin);
-
-        if(userLogin) {
-            const isMatch = await bcrypt.compare(password, userLogin.password);
-
-            token = await userLogin.generateAuthToken();
-            console.log(token);
-
-            res.cookie("loginToken", token, {
-                expires:new Date(Date.now() + 25892000000),//30 days
-                httpOnly:true
-            });
-        
-            if(!isMatch){
-                res.status(400).json({error:'Invalid Credentials!'});
-            }else{
-                res.json({message:'User signin successfully'});
-            }
-            
-        }else {
-            res.status(400).json({error:'Invalid Credentials!'});
-        }
-        
-       
-        
-
-    }catch (err) {
-        console.log(err);
-    }
-});
 
 
 module.exports = router;

@@ -54,13 +54,8 @@ const RegVechile = () => {
                     <div className="signup-form">
                         <h2 className="form-title">Register Vehicle</h2>
                         <form method="POST" className="register-form" id="register-form">
-                            <div className="form-group">
-                                <label for="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name"
-                                value={regVec.name}
-                                onChange={handleInputs}
-                                placeholder="Your Name"/>
-                            </div>
+
+
                             <div className="form-group">
                                 <label for="email"><i className="zmdi zmdi-email"></i></label>
                                 <input type="email" name="email" id="email"
@@ -68,24 +63,38 @@ const RegVechile = () => {
                                 onChange={handleInputs}
                                 placeholder="Your Email"/>
                             </div>
+
+                            <div className="form-group">
+                                <label for="phone"><i className="zmdi zmdi-phone"></i></label>
+                                <input type="number" name="phone" id="phone"
+                                value={regVec.phone}
+                                onChange={handleInputs}
+                                placeholder="Your Phone Number"/>
+                            </div>
+
+                            <div className="form-group">
+                                <label for="vehicleNumber"><i className="zmdi zmdi-car"></i></label>
+                                <input type="text" name="vehicleNumber" id="vehicleNumber"
+                                value={regVec.vehicleNumber}
+                                onChange={handleInputs}
+                                placeholder="Your Vehicle Number"/>
+                            </div>
+
                             <div className="form-group">
                                 <label for="pass"><i className="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="pass" id="pass"
+                                <input type="password" name="password" id="password"
                                 value={regVec.password}
                                 onChange={handleInputs}
                                 placeholder="Password"/>
                             </div>
                             <div className="form-group">
-                                <label for="re-pass"><i className="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass"
+                                <label for="cpassword"><i className="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="cpassword" id="cpassword"
                                 value={regVec.cpassword}
                                 onChange={handleInputs}
                                 placeholder="Repeat your password"/>
                             </div>
-                            <div className="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
-                                <label for="agree-term" className="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" className="term-service">Terms of service</a></label>
-                            </div>
+                            
                             <div className="form-group form-button">
                                 <input type="submit" name="signup" id="signup" className="form-submit" value="Register Vehicle"
                                 onClick={postData}/>
