@@ -25,24 +25,16 @@ const middleware = (req, res, next) =>{
 // middleware();
 
 
-app.get('/', (req, res) => {
-     res.send('Hello World from the server app.js');
-});
-
-app.get('/about', middleware, (req, res) => {
-    res.send('Hello About World from the server');
-});
-
-app.get('/contact', (req, res) => {
-    res.send('Hello Contact World from the server');
-});
-
 app.get('/signin', (req, res) => {
     res.send('Hello SignIn World from the server');
 });
 
-app.get('/signup', (req, res) => {
-    res.send('Hello SignUp World from the server');
+app.get('/reguser', (req, res) => {
+    res.send('Hello RegUser World from the server');
+});
+
+app.get('/regvehicle', (req, res) => {
+    res.send('Hello RegVehicle World from the server');
 });
 
 app.listen(5000, () =>{

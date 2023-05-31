@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 });
 
 //registering the new user
-router.post('/register', async (req, res) => {
+router.post('/regUser', async (req, res) => {
     
     const { name, email, phone, password, cpassword} = req.body;
 
