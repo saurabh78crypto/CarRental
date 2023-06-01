@@ -4,39 +4,25 @@ import { useHistory } from 'react-router-dom';
 
 
 const RegVechile = () => {
-
-    //To navigate through pages  
     const history = useHistory();
-    //To store form data in useState using array
     const [regVec, setVec] = useState({ email:"",phone:"",vehicleNumber:"",password:"",cpassword:"" });
-  
     let name, value;
-    //Handling the inputs using the name and value property
     const handleInputs = (e) => {
         console.log(e);
         name = e.target.name;
         value = e.target.value;
-        //Storing the data in useState
         setVec({...regVec, [name]:value })
     }
-  
+    
     const postData = async (e) => {
-      //To remove or prevent from the reloading
         e.preventDefault();
-
-        //Accessing the fields 
         const {email, phone, vehicleNumber,  password, cpassword} = regVec;
-       
-        //To connect frontend to the backend we're using the fetch Api
         const res = await fetch('/regVehicle', {
           method:'POST',
           headers: { 'Content-Type' : 'application/json' },
-          //o convert json data into string to make server understandable code
           body: JSON.stringify({ email, phone, vehicleNumber, password, cpassword })
         });
-  
         const data = await res.json();
-  
         if(res.status === 422 || !data){
           window.alert("Invalid Registration!");
         }else{
@@ -44,7 +30,6 @@ const RegVechile = () => {
           history.push('/login');
         }
     }
-
 
   return (
     <>
@@ -54,7 +39,6 @@ const RegVechile = () => {
                     <div className="signup-form">
                         <h2 className="form-title">Register Vehicle</h2>
                         <form method="POST" className="register-form" id="register-form">
-
 
                             <div className="form-group">
                                 <label for="email"><i className="zmdi zmdi-email"></i></label>
@@ -87,6 +71,7 @@ const RegVechile = () => {
                                 onChange={handleInputs}
                                 placeholder="Password"/>
                             </div>
+
                             <div className="form-group">
                                 <label for="cpassword"><i className="zmdi zmdi-lock-outline"></i></label>
                                 <input type="password" name="cpassword" id="cpassword"
