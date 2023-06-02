@@ -34,14 +34,14 @@ const userSchema = new mongoose.Schema({
 });
 
 //Password hashing
-userSchema.pre('save', async function(next) {
-    console.log('I am in the pre method');
-    if(this.isModified('password')){
-        this.password = await bcrypt.hash(this.password, 10);
-        this.cpassword = await bcrypt.hash(this.cpassword, 10);
-    }
-    next();
-});
+// userSchema.pre('save', async function(next) {
+//     console.log('I am in the pre method');
+//     if(this.isModified('password')){
+//         this.password = await bcrypt.hash(this.password, 10);
+//         this.cpassword = await bcrypt.hash(this.cpassword, 10);
+//     }
+//     next();
+// });
 
 //Generating Tokens
 userSchema.methods.generateAuthToken = async function () {
