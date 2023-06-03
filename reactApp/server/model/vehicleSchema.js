@@ -1,23 +1,11 @@
 const mongoose = require('mongoose')
 
 const vehicleSchema = new mongoose.Schema({
-    email:{
-        type: String,
-        required: true
-    },
-    phone:{
-        type: Number,
-        required: true
-    },
     vehicleNumber:{
         type: String,
         required: true
     },
-    password:{
-        type: String,
-        required: true
-    },
-    cpassword:{
+    model:{
         type: String,
         required: true
     },
@@ -31,15 +19,7 @@ const vehicleSchema = new mongoose.Schema({
     ],
 });
 
-//Password hashing
-vehicleSchema.pre('save', async function(next) {
-    console.log('I am in the pre method');
-    if(this.isModified('password')){
-        this.password = await bcrypt.hash(this.password, 10);
-        this.cpassword = await bcrypt.hash(this.cpassword, 10);
-    }
-    next();
-});
+
 
 //Generating Tokens
 vehicleSchema.methods.generateAuthToken = async function () {
@@ -53,6 +33,6 @@ vehicleSchema.methods.generateAuthToken = async function () {
     }
 }
 
-const vehicleUser = mongoose.model('VEHICLEUSER',vehicleSchema);
+const Car = mongoose.model('CAR',vehicleSchema);
 
-module.exports = vehicleUser;
+module.exports = Car;

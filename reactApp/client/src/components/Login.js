@@ -22,7 +22,7 @@ const Login = () => {
           window.alert("Invalid Credentials");
       }else{
         window.alert("Login Successful");
-        history.push('/');
+        history.push('/Dashboard');
       }
   } 
 
@@ -41,8 +41,8 @@ const Login = () => {
               <h2 class="form-title">Sign In</h2>
               <form method="POST" class="register-form" id="login-form">
                 <div class="form-group">
-                    <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                    <input type="text" name="your_name" id="your_name" placeholder="Your Name"
+                    <label for="your_email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                    <input type="text" name="your_email" id="your_email" placeholder="Your Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     />

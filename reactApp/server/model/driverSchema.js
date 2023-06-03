@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-const userSchema = new mongoose.Schema({
+const driverSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: Number,
+        required: true
+    },
+    cars: {
+        type: String,
         required: true
     },
     password: {
@@ -34,7 +38,7 @@ const userSchema = new mongoose.Schema({
 
 
 //Generating Tokens
-userSchema.methods.generateAuthToken = async function () {
+driverSchema.methods.generateAuthToken = async function () {
     try{
         let token = jwt.sign({_id:this._id}, process.env.SECRET_KEY);
         this.tokens = this.tokens.concat({ token:token });
@@ -45,5 +49,5 @@ userSchema.methods.generateAuthToken = async function () {
     }
 }
 
-const User = mongoose.model('USER', userSchema);
-module.exports = User;
+const Driver = mongoose.model('DRIVER', driverSchema);
+module.exports = Driver;

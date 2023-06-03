@@ -7,6 +7,8 @@ import RegVechile from './components/RegVehicle'
 import Login from './components/Login'
 import ErrorPage from './components/ErrorPage'
 import Dashboard from './components/Dashboard'
+import AddDriver from './components/AddDriver'
+
 
 const App = () => {
   return (
@@ -26,6 +28,10 @@ const App = () => {
 
           <Route path='/regvehicle'>
             <RegVechile/>
+          </Route>
+
+          <Route path='/adddriver'>
+            <AddDriver/>
           </Route>
 
           <Route>

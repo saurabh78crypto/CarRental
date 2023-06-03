@@ -1,43 +1,65 @@
-import reguserImg from '../images/reguser.jpg'
+import React from 'react'
+import driverImg from '../images/driverImg.jpg'
 import { useFormik } from 'formik'
-import { signUPSchema } from '../schemas';
+import { driverSchema } from '../schemas';
 import { useHistory } from 'react-router-dom'
 
+const initialValues = { name: "", email: "", phone: "",cars:"", password: "", cpassword: "" };
 
-const initialValues = { name: "", email: "", phone: "", password: "", cpassword: "" };
-
-const RegUser = () => {
-    const history =useHistory();
+const AddDriver = () => {
+  const history =useHistory();
+  
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
-        validationSchema: signUPSchema,
+        validationSchema: driverSchema,
         onSubmit: async (values, action) => {
            
-            const res = await fetch('http://localhost:3000/api/auth/reguser',
+            const res = await fetch('http://localhost:3000/api/auth/adddriver',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ values })
                 });
                 if(res === 422){
-                    window.alert("User Already Registered!")
+                    window.alert("Driver Already Registered!")
                 }else{
-                    window.alert("User Registered Successfully!")
-                    history.push('/login')
+                    window.alert("Driver Registered Successfully!")
+                    history.push('/Dashboard')
                     action.resetForm();
                 }
-            
         },
     });
 
 
-    return (
-        <>
-            <section className="signup">
+  return (
+    <>
+      {/* Navbar  */}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/Dashboard">Ride-In</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item dropdown" >
+                  <div class="btn-group dropleft" role="group">
+                    <a type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/login">Logout</a>
+                    </div>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+        </nav>
+
+        {/* form  */}
+        <section className="signup">
                 <div className="container">
                     <div className="signup-content">
                         <div className="signup-form">
-                            <h2 className="form-title">Sign up</h2>
+                            <h2 className="form-title">Add Driver</h2>
                             <form method="POST" onSubmit={handleSubmit} className="register-form" id="register-form">
 
                                 <div className="form-group">
@@ -74,6 +96,22 @@ const RegUser = () => {
                                 </div>
 
                                 <div className="form-group">
+                                    <label for="cars"><i className="zmdi zmdi-car"></i></label>
+                                    <select id='carDropdown'  onChange={handleChange}>
+                                        <option value=''>Please select the vehicle number </option>
+
+                                    </select>
+
+                                    {/* <input type="text" name="cars" id="cars"
+                                        value={values.cars}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        placeholder="Select Vehicle Number" /> */}
+
+                                    {errors.phone && touched.phone ? <p className='form-error'>{errors.phone}</p> : null}
+                                </div>
+
+                                <div className="form-group">
                                     <label for="password"><i className="zmdi zmdi-lock"></i></label>
                                     <input type="password" name="password" id="password"
                                         value={values.password}
@@ -101,15 +139,14 @@ const RegUser = () => {
                             </form>
                         </div>
                         <div className="signup-image">
-                            <figure><img src={reguserImg} alt="sing up image" /></figure>
-                            <a href='/login' className="signup-image-link">Already registered? Login Now!</a>
+                            <figure><img src={driverImg} alt="sing up image" /></figure>
                         </div>
                     </div>
                 </div>
             </section>
-
-        </>
-    )
+        
+    </>
+  )
 }
 
-export default RegUser
+export default AddDriver
