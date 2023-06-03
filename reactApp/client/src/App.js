@@ -6,6 +6,7 @@ import RegUser from './components/RegUser'
 import RegVechile from './components/RegVehicle'
 import Login from './components/Login'
 import ErrorPage from './components/ErrorPage'
+import Dashboard from './components/Dashboard'
 
 const App = () => {
   return (
@@ -13,6 +14,10 @@ const App = () => {
       <Switch>
           <Route path='/login'>
             <Login/>
+          </Route>
+
+          <Route path='/dashboard'>
+            <Dashboard/>
           </Route>
           
           <Route path='/reguser'>
