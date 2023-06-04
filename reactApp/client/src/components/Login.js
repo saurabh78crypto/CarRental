@@ -1,31 +1,36 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import loginImg from '../images/login.jpg'
+// import { useAuth0 } from "@auth0/auth0-react";
+import { useFormik } from 'formik'
 import {useHistory} from 'react-router-dom'
+import {signInSchema} from '../schemas/index'
+
+const initialValues = {email:'', password:''};
 
 const Login = () => {
-  const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const loginUser = async (e) => {
-      e.preventDefault();
-      
-      const res = await fetch('/signin', {
-        method:"POST",
-        headers:{ "Content-Type" : "application/json"},
-        body:JSON.stringify({ email, password })
-      });
-
-      const data = res.json();
-
-      if(res.status === 400 || !data){
-          window.alert("Invalid Credentials");
-      }else{
-        window.alert("Login Successful");
-        history.push('/Dashboard');
-      }
-  } 
-
+  const history = useHistory();  
+  // const { loginWithRedirect } = useAuth0();
+  const {values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
+      initialValues,
+      validationSchema: signInSchema,
+      onSubmit: async (values, action) => {
+          const res = await fetch('http://localhost:3000/api/auth/signin', {
+            method:"POST",
+            headers:{ "Content-Type" : "application/json"},
+            body:JSON.stringify({ values })
+          });
+    
+          const data = res.json();
+    
+          if(res.status === 400 || !data){
+              window.alert("Invalid Credentials");
+          }else{
+            window.alert("Login Successful");
+            history.push('/Dashboard');
+          }
+        }
+      })
+    
   return (
     <>
       <section class="sign-in">
@@ -33,47 +38,38 @@ const Login = () => {
           <div class="signin-content">
             <div class="signin-image">
                 <figure><img src={loginImg} alt="sing up image"/></figure>
-                <a href="/reguser" class="signup-image-link">Create an account</a>
-                <a href="/regvehicle" class="signup-image-link">Register Vehicle</a>
+                <a href="/reguser" class="signup-image-link">Don't have an account? Register Now!</a>
             </div>
 
             <div class="signin-form">
               <h2 class="form-title">Sign In</h2>
-              <form method="POST" class="register-form" id="login-form">
+              <form method="POST" onSubmit={handleSubmit} class="register-form" id="login-form">
                 <div class="form-group">
-                    <label for="your_email"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                    <input type="text" name="your_email" id="your_email" placeholder="Your Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    <label for="email"><i class="zmdi zmdi-account material-icons-email"></i></label>
+                    <input type="text" name="email" id="email" placeholder="Your Email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                     />
+                    {errors.email && touched.email ? <p className='form-error'>{errors.email}</p> : null}
                 </div>
 
                 <div class="form-group">
-                    <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                    <input type="password" name="password" id="your_pass" placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                    <input type="password" name="password" id="password" placeholder="Password"
+                   value={values.password}
+                   onChange={handleChange}
+                   onBlur={handleBlur}
                     />
-                </div>
-
-                <div class="form-group">
-                    <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                    <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                {errors.password && touched.password ? <p className='form-error'>{errors.password}</p> : null}
                 </div>
 
                 <div class="form-group form-button">
-                    <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" onClick={loginUser}/>
+                    <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
                 </div>
               </form>
 
-              <div class="social-login">
-                  <span class="social-label">Or login with</span>
-                  <ul class="socials">
-                      <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                      <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                      <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                  </ul>
-              </div>
+              
             </div>
           </div>
         </div>

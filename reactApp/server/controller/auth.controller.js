@@ -3,6 +3,29 @@ import User from "../model/userSchema";
 import Car from "../model/vehicleSchema";
 const bcrypt = require('bcrypt')
 
+
+//Login
+
+const signin = async (req, res) => {
+    try {
+        let token;
+        const { email, password } = req.body;
+        const userLogin = await User.findOne({ email: email });
+        if (userLogin) {
+            await bcrypt.compare(password, userLogin.password);
+            token = await userLogin.generateAuthToken();
+    
+            res.cookie("loginToken", token, {
+                expires: new Date(Date.now() + 25892000000),//30 days
+                httpOnly: true
+            });
+
+        }    
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 //User Registration
 const regUser = async (req, res) => {
     try {
@@ -112,7 +135,11 @@ const addDriver = async (req, res) => {
 }
 
 
+//Display Car Information
 
 
 
-export { regUser, regVehicle, addDriver}
+
+
+
+export { regUser, regVehicle, addDriver, signin}

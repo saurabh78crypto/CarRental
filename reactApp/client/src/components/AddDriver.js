@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import driverImg from '../images/driverImg.jpg'
 import { useFormik } from 'formik'
 import { driverSchema } from '../schemas';
 import { useHistory } from 'react-router-dom'
+
 
 const initialValues = { name: "", email: "", phone: "",cars:"", password: "", cpassword: "" };
 
 const AddDriver = () => {
   const history =useHistory();
   
+  //To retrieve vehicleNumber from the database
+  
+  
+  
+    //To store data 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
         validationSchema: driverSchema,
@@ -97,18 +103,12 @@ const AddDriver = () => {
 
                                 <div className="form-group">
                                     <label for="cars"><i className="zmdi zmdi-car"></i></label>
-                                    <select id='carDropdown'  onChange={handleChange}>
-                                        <option value=''>Please select the vehicle number </option>
-
+                                    <select name="" id="">
+                                        <option value="">
+                                            
+                                        </option>
                                     </select>
-
-                                    {/* <input type="text" name="cars" id="cars"
-                                        value={values.cars}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        placeholder="Select Vehicle Number" /> */}
-
-                                    {errors.phone && touched.phone ? <p className='form-error'>{errors.phone}</p> : null}
+                                    {errors.carsDrop && touched.carsDrop ? <p className='form-error'>{errors.carsDrop}</p> : null}
                                 </div>
 
                                 <div className="form-group">

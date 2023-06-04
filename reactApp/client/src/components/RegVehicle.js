@@ -25,32 +25,6 @@ const RegVechile = () => {
         },
     })
 
-    // const [regVec, setVec] = useState({ email:"",phone:"",vehicleNumber:"",password:"",cpassword:"" });
-    // let name, value;
-    // const handleInputs = (e) => {
-    //     console.log(e);
-    //     name = e.target.name;
-    //     value = e.target.value;
-    //     setVec({...regVec, [name]:value })
-    // }
-    
-    // const postData = async (e) => {
-    //     e.preventDefault();
-    //     const {email, phone, vehicleNumber,  password, cpassword} = regVec;
-    //     const res = await fetch('/regVehicle', {
-    //       method:'POST',
-    //       headers: { 'Content-Type' : 'application/json' },
-    //       body: JSON.stringify({ email, phone, vehicleNumber, password, cpassword })
-    //     });
-    //     const data = await res.json();
-    //     if(res.status === 422 || !data){
-    //       window.alert("Invalid Registration!");
-    //     }else{
-    //       window.alert(" Registration Successful!");
-    //       history.push('/login');
-    //     }
-    
-
   return (
     <>
      {/* Navbar  */}

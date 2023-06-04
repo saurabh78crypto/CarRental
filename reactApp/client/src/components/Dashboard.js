@@ -64,10 +64,10 @@ const Dashboard = () => {
             </div>
 
             <div className='col-2 m-3 border'>
-                <a href="/CarRide"> 
+                <a href="/TakeRide"> 
                 <img src={carRide} alt="" srcset="" className='pl-4' />
                  <div className=' text-center'>
-                    Car Ride
+                    Take Ride
                 </div>
                 </a>
             </div>

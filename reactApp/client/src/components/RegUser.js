@@ -19,7 +19,10 @@ const RegUser = () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ values })
                 });
-                if(res === 422){
+
+                const data = res.json(); 
+
+                if(res === 422 || !data){
                     window.alert("User Already Registered!")
                 }else{
                     window.alert("User Registered Successfully!")

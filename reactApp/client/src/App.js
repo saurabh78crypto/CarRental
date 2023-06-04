@@ -8,12 +8,14 @@ import Login from './components/Login'
 import ErrorPage from './components/ErrorPage'
 import Dashboard from './components/Dashboard'
 import AddDriver from './components/AddDriver'
-
+import CarInfo from './components/CarInfo'
+import TakeRide from './components/TakeRide'
 
 const App = () => {
   return (
     <>
       <Switch>
+
           <Route path='/login'>
             <Login/>
           </Route>
@@ -32,6 +34,14 @@ const App = () => {
 
           <Route path='/adddriver'>
             <AddDriver/>
+          </Route>
+
+          <Route path='/carinfo'>
+            <CarInfo/>
+          </Route>
+
+          <Route path='/takeride'>
+            <TakeRide/>
           </Route>
 
           <Route>
