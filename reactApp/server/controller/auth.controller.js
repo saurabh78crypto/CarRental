@@ -135,11 +135,22 @@ const addDriver = async (req, res) => {
 }
 
 
-//Display Car Information
+//Retrieve Vehicle Number
+const getvehicleList = async (req,res) => {
+    try {
+        const vehicleList = await Car.find({  })
+        // const vehicleNumber = await vehicleList.findOne({vehicleNumber})
+        res.send(vehicleList).status(200);
+        res.status(200).json();
+    } catch (error) {
+        res.status(400).send({ success:false, msg:error.message });
+    }
+}
 
 
 
 
 
 
-export { regUser, regVehicle, addDriver, signin}
+
+export { regUser, regVehicle, addDriver, signin, getvehicleList}
