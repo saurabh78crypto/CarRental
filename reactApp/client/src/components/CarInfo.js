@@ -39,19 +39,20 @@ const CarInfo = () => {
                     <div className="signup-content">
                         <div className="signup-form">
                             <h2 className="form-title">Car Info</h2>
-                            <select class="form-control select2 select2-hidden-accessible" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
-                                <option selected="selected">--Select--</option>
-                                <option>Swift Desire</option>
-                                <option>Wagnor</option>
-                                <option>Ertiga</option>
-                                <option>Innova</option>
-                                <option>Maranzo</option>
-                            </select>
-
-                            <div className="form-group form-button">
-                                    <input type="submit" name="show" id="show" className="form-submit" value="Show" />
+                            <form method="POST" className="register-form" id="register-form"></form>
+                                <select class="form-control select2 select2-hidden-accessible" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
+                                    <option selected="selected">--Select--</option>
+                                    <option>Swift Desire</option>
+                                    <option>Wagnor</option>
+                                    <option>Ertiga</option>
+                                    <option>Innova</option>
+                                    <option>Maranzo</option>
+                                </select>
+    
+                                <div className="form-group form-button">
+                                        <input type="submit" name="show" id="show" className="form-submit" value="Show" />
                                 </div>
-
+                            <form/>
                         </div>
                         <div className="signup-image">
                             <figure><img src={carinfo} alt="sing up image" /></figure>

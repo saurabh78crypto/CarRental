@@ -31,42 +31,43 @@ const TakeRide = () => {
                     <div className="signup-content">
                         <div className="signup-form">
                             <h2 className="form-title">Take Ride</h2>
-                            <p>From</p>
-                            <select class="form-control select2 select2-hidden-accessible" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
-                                <option selected="selected">--Select--</option>
-                                <option>Swift Desire</option>
-                                <option>Wagnor</option>
-                                <option>Ertiga</option>
-                                <option>Innova</option>
-                                <option>Maranzo</option>
-                            </select>
+                            <form method="POST" className="register-form" id="register-form"></form>
+                                <p>From</p>
+                                <select class="form-control select2 select2-hidden-accessible" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
+                                    <option selected="selected">--Select--</option>
+                                    <option>Swift Desire</option>
+                                    <option>Wagnor</option>
+                                    <option>Ertiga</option>
+                                    <option>Innova</option>
+                                    <option>Maranzo</option>
+                                </select>
+                                
+                                <p className='pt-2'>To</p>
                             
-                            <p className='pt-2'>To</p>
-                          
-                            <select class="form-control select2 select2-hidden-accessible mt-0" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
-                                <option selected="selected">--Select--</option>
-                                <option>Swift Desire</option>
-                                <option>Wagnor</option>
-                                <option>Ertiga</option>
-                                <option>Innova</option>
-                                <option>Maranzo</option>
-                            </select>
-
-                            <p className='pt-2'>Select Car</p>
-                          
-                            <select class="form-control select2 select2-hidden-accessible mt-0" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
-                                <option selected="selected">--Select--</option>
-                                <option>Swift Desire</option>
-                                <option>Wagnor</option>
-                                <option>Ertiga</option>
-                                <option>Innova</option>
-                                <option>Maranzo</option>
-                            </select>
-                           
-                            <div className="form-group form-button">
-                                    <input type="submit" name="book" id="book" className="form-submit" value="Book" />
+                                <select class="form-control select2 select2-hidden-accessible mt-0" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
+                                    <option selected="selected">--Select--</option>
+                                    <option>Swift Desire</option>
+                                    <option>Wagnor</option>
+                                    <option>Ertiga</option>
+                                    <option>Innova</option>
+                                    <option>Maranzo</option>
+                                </select>
+    
+                                <p className='pt-2'>Select Car</p>
+                            
+                                <select class="form-control select2 select2-hidden-accessible mt-0" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
+                                    <option selected="selected">--Select--</option>
+                                    <option>Swift Desire</option>
+                                    <option>Wagnor</option>
+                                    <option>Ertiga</option>
+                                    <option>Innova</option>
+                                    <option>Maranzo</option>
+                                </select>
+                            
+                                <div className="form-group form-button">
+                                        <input type="submit" name="book" id="book" className="form-submit" value="Book" />
                                 </div>
-
+                            <form/>
                         </div>
                         <div className="signup-image">
                             <figure><img src={takeride} alt="sing up image" /></figure>

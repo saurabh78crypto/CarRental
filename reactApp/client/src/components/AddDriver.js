@@ -103,10 +103,13 @@ const AddDriver = () => {
 
                                 <div className="form-group">
                                     <label for="cars"><i className="zmdi zmdi-car"></i></label>
-                                    <select name="" id="">
-                                        <option value="">
-                                            
-                                        </option>
+                                    <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
+                                        <option selected="selected">--Select--</option>
+                                        <option>Swift Desire</option>
+                                        <option>Wagnor</option>
+                                        <option>Ertiga</option>
+                                        <option>Innova</option>
+                                        <option>Maranzo</option>
                                     </select>
                                     {errors.carsDrop && touched.carsDrop ? <p className='form-error'>{errors.carsDrop}</p> : null}
                                 </div>
