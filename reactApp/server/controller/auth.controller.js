@@ -99,7 +99,7 @@ const regVehicle = async (req, res) => {
 //Driver Registration
 const addDriver = async (req, res) => {
     try {
-        const { name, email, cars, phone, password, cpassword } = req.body.values;
+        const { name, email, selectCar, phone, password, cpassword } = req.body.values;
         // Check if User exist or not
         const userExist = await User.findOne({ email: email });
         console.log(userExist)
@@ -116,7 +116,7 @@ const addDriver = async (req, res) => {
             name: name,
             email: email,
             phone: phone,
-            cars: cars,
+            selectCar: selectCar,
             password: hashedPassword,
             cpassword: hashedCPassword
         })
@@ -135,15 +135,22 @@ const addDriver = async (req, res) => {
 }
 
 
-//Retrieve Vehicle Number
+//Retrieve Vehicle List
 const getvehicleList = async (req,res) => {
     try {
-        const vehicleList = await Car.find({  })
-        // const vehicleNumber = await vehicleList.findOne({vehicleNumber})
-        res.send(vehicleList).status(200);
-        res.status(200).json();
-    } catch (error) {
-        res.status(400).send({ success:false, msg:error.message });
+        const vehicleList = await Car.find({  });
+
+        return res.json({
+            statuscode: 200,
+            message: 'Vehicle fetch successfully',
+            //Convert vehicleList in the array 
+            vehicleList: Array.isArray(vehicleList) ? vehicleList: []
+        })
+    } catch (err) {
+        return({
+            statuscode: 400,
+            error: err.message
+        })
     }
 }
 

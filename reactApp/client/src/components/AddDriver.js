@@ -5,34 +5,53 @@ import { driverSchema } from '../schemas';
 import { useHistory } from 'react-router-dom'
 
 
-const initialValues = { name: "", email: "", phone: "",cars:"", password: "", cpassword: "" };
+const initialValues = { name: "", email: "", phone: "",selectCar:"", password: "", cpassword: "" };
 
 const AddDriver = () => {
   const history =useHistory();
   
   //To retrieve vehicleNumber from the database
-  
-  
+    const [vehicleList, setVehicleList] = useState([]);
+    useEffect(() => {
+      fetch('/api/auth/getvehicleList')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data.vehicleList)) {
+            setVehicleList(data.vehicleList);
+          } else {
+            console.log('Vehicle list is not an array:', data);
+          }
+        })
+        .catch(error => console.log(error));
+    }, []);
+    
   
     //To store data 
+    const [selectVehicle,setSelectVehicle] = useState('');
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
         validationSchema: driverSchema,
         onSubmit: async (values, action) => {
-           
-            const res = await fetch('http://localhost:3000/api/auth/adddriver',
+
+            const selectedVehicleNumber = values.selectCar;
+            console.log(selectedVehicleNumber)
+
+            const res = await fetch('/api/auth/adddriver',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ values })
+                    body: JSON.stringify({ values, vehicleNumber: selectedVehicleNumber })
                 });
-                if(res === 422){
-                    window.alert("Driver Already Registered!")
-                }else{
-                    window.alert("Driver Registered Successfully!")
-                    history.push('/Dashboard')
-                    action.resetForm();
-                }
+
+                const data = await res.json();
+
+                if (data) {
+                    window.alert("Driver Registered Successfully!");
+                    history.push('/Dashboard');
+                    // action.resetForm();
+                  } else {
+                    window.alert("Registration Failed!");
+                  }
         },
     });
 
@@ -103,15 +122,14 @@ const AddDriver = () => {
 
                                 <div className="form-group">
                                     <label for="cars"><i className="zmdi zmdi-car"></i></label>
-                                    <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
-                                        <option selected="selected">--Select--</option>
-                                        <option>Swift Desire</option>
-                                        <option>Wagnor</option>
-                                        <option>Ertiga</option>
-                                        <option>Innova</option>
-                                        <option>Maranzo</option>
+                                    <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" 
+                                    aria-hidden="true" name='selectCar' value={selectVehicle} onChange={e => setSelectVehicle(e.target.value)} >
+                                        <option></option>
+                                        {vehicleList.map(Vehicles =>(   
+                                        <option key={Vehicles._id} value={Vehicles.vehicleNumber} >{Vehicles.vehicleNumber}</option>
+                                        ))}
                                     </select>
-                                    {errors.carsDrop && touched.carsDrop ? <p className='form-error'>{errors.carsDrop}</p> : null}
+                                    {errors.selectCar && touched.selectCar ? <p className='form-error'>{errors.selectCar}</p> : null}
                                 </div>
 
                                 <div className="form-group">

@@ -27,7 +27,7 @@ const driverSchema = Yup.object({
     name: Yup.string().min(3).max(25).required("Name is required!"),
     email: Yup.string().email().required("Email is required!"),
     phone: Yup.number().min(8).integer().required("Phone Number is required!"),
-    cars: Yup.string().required('Selection is required!'),
+    // selectCar: Yup.string().required('Selection is required!'),
     password: Yup.string().min(6).required("Password is required!"),
     cpassword: Yup.string().required().oneOf([Yup.ref('password'), null], "Password must be match"),
 })
