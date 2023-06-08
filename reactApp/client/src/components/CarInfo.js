@@ -1,14 +1,44 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import carinfo from '../images/carinfo.jpg'
 
 const CarInfo = () => {
 
+    //To retrive the vehicle model
+    const [vehicleList, setVehicleList] = useState([]);
+    const [selectVehicle,setSelectVehicle] = useState('');
+    const [selectedVehicleDetails, setSelectedVehicleDetails] = useState(null);
+
+    const handleChange = (e) => {
+        setSelectVehicle(e.target.value)
+    }
+
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetch.get('/http://localhost:3000/api/auth/get');
-            console.log(data);
+      fetch('/api/auth/getvehicleList')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data.vehicleList)) {
+            setVehicleList(data.vehicleList);
+          } else {
+            console.log('Vehicle list is not an array:', data);
+          }
+        })
+        .catch(error => console.log(error));
+    }, []);
+
+    const handleShowDetails = () => {
+        if (selectVehicle) {
+          fetch(`/api/auth/getvehicledetails/${selectVehicle}`)
+            .then(res => res.json())
+            .then(data => {
+              setSelectedVehicleDetails(data);
+            })
+            .catch(error => console.log(error));
         }
-    })
+      };
+
+
+      
+    
 
   return (
     <>
@@ -40,19 +70,32 @@ const CarInfo = () => {
                         <div className="signup-form">
                             <h2 className="form-title">Car Info</h2>
                             <form method="POST" className="register-form" id="register-form"></form>
-                                <select class="form-control select2 select2-hidden-accessible" style={{width: '100%'}} tabindex="-1" aria-hidden="true">
-                                    <option selected="selected">--Select--</option>
-                                    <option>Swift Desire</option>
-                                    <option>Wagnor</option>
-                                    <option>Ertiga</option>
-                                    <option>Innova</option>
-                                    <option>Maranzo</option>
-                                </select>
-    
+                            <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" 
+                                    aria-hidden="true" name='selectVehicle' value={selectVehicle} onChange={e => {setSelectVehicle(e.target.value) 
+                                    handleChange(e)}} >
+                                        <option>Select..</option>
+                                        {vehicleList.map(Vehicles =>(   
+                                        <option key={Vehicles._id} value={Vehicles.vehicleNumber} >{Vehicles.vehicleNumber}</option>
+                                        ))}
+                                    </select>
+
                                 <div className="form-group form-button">
-                                        <input type="submit" name="show" id="show" className="form-submit" value="Show" />
+                                        <input type="submit" name="show" id="show" className="form-submit" value="Show" 
+                                        onClick={handleShowDetails}/>
                                 </div>
+                                
+                                {/* Display selected vehicle details  */}
+                                {selectedVehicleDetails && (
+                                    <div>
+                                      <h2> Vehicle Details</h2>
+                                      <p>Vehicle Number: {selectedVehicleDetails.vehicleNumber}</p>
+                                      console.log(selectedVehicleDetails.vehicleNumber);
+                                      <p>Model: {selectedVehicleDetails.model}</p>
+                                    </div>
+                                )}
+                            
                             <form/>
+
                         </div>
                         <div className="signup-image">
                             <figure><img src={carinfo} alt="sing up image" /></figure>

@@ -14,7 +14,7 @@ const driverSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    selectCar: {
+    selectVehicle: {
         type: String,
         required: true
     },

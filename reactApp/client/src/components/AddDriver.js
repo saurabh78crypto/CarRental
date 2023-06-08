@@ -5,13 +5,14 @@ import { driverSchema } from '../schemas';
 import { useHistory } from 'react-router-dom'
 
 
-const initialValues = { name: "", email: "", phone: "",selectCar:"", password: "", cpassword: "" };
+const initialValues = { name: "", email: "", phone: "",selectVehicle:"", password: "", cpassword: "" };
 
 const AddDriver = () => {
   const history =useHistory();
   
   //To retrieve vehicleNumber from the database
     const [vehicleList, setVehicleList] = useState([]);
+    const [selectVehicle,setSelectVehicle] = useState('');
     useEffect(() => {
       fetch('/api/auth/getvehicleList')
         .then(res => res.json())
@@ -27,24 +28,24 @@ const AddDriver = () => {
     
   
     //To store data 
-    const [selectVehicle,setSelectVehicle] = useState('');
+    
+    
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
         validationSchema: driverSchema,
         onSubmit: async (values, action) => {
 
-            const selectedVehicleNumber = values.selectCar;
-            console.log(selectedVehicleNumber)
+            // const selectedVehicleNumber = values.selectVehicle;
+            
 
             const res = await fetch('/api/auth/adddriver',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ values, vehicleNumber: selectedVehicleNumber })
+                    body: JSON.stringify({ values,  selectVehicle })
                 });
-
                 const data = await res.json();
-
+                console.log(selectVehicle)
                 if (data) {
                     window.alert("Driver Registered Successfully!");
                     history.push('/Dashboard');
@@ -123,13 +124,14 @@ const AddDriver = () => {
                                 <div className="form-group">
                                     <label for="cars"><i className="zmdi zmdi-car"></i></label>
                                     <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" 
-                                    aria-hidden="true" name='selectCar' value={selectVehicle} onChange={e => setSelectVehicle(e.target.value)} >
+                                    aria-hidden="true" name='selectVehicle' value={selectVehicle} onChange={e => {setSelectVehicle(e.target.value)
+                                    handleChange(e)}} >
                                         <option></option>
                                         {vehicleList.map(Vehicles =>(   
                                         <option key={Vehicles._id} value={Vehicles.vehicleNumber} >{Vehicles.vehicleNumber}</option>
                                         ))}
                                     </select>
-                                    {errors.selectCar && touched.selectCar ? <p className='form-error'>{errors.selectCar}</p> : null}
+                                    {errors.selectVehicle && touched.selectVehicle ? <p className='form-error'>{errors.selectVehicle}</p> : null}
                                 </div>
 
                                 <div className="form-group">
