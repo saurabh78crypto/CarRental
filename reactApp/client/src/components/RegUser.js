@@ -3,25 +3,20 @@ import { useFormik } from 'formik'
 import { signUPSchema } from '../schemas';
 import { useHistory } from 'react-router-dom'
 
-
 const initialValues = { name: "", email: "", phone: "", password: "", cpassword: "" };
-
 const RegUser = () => {
     const history =useHistory();
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
         validationSchema: signUPSchema,
         onSubmit: async (values, action) => {
-           
             const res = await fetch('http://localhost:3000/api/auth/reguser',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ values })
                 });
-
                 const data = res.json(); 
-
                 if(res === 422 || !data){
                     window.alert("User Already Registered!")
                 }else{
@@ -29,10 +24,8 @@ const RegUser = () => {
                     history.push('/login')
                     action.resetForm();
                 }
-            
         },
     });
-
 
     return (
         <>
@@ -110,7 +103,6 @@ const RegUser = () => {
                     </div>
                 </div>
             </section>
-
         </>
     )
 }

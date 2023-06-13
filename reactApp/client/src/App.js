@@ -10,6 +10,9 @@ import Dashboard from './components/Dashboard'
 import AddDriver from './components/AddDriver'
 import CarInfo from './components/CarInfo'
 import TakeRide from './components/TakeRide'
+import AddLocation from './components/AddLocation'
+import CarStatus from './components/CarStatus'
+import Service from './components/Service'
 
 const App = () => {
   return (
@@ -42,6 +45,18 @@ const App = () => {
 
           <Route path='/takeride'>
             <TakeRide/>
+          </Route>
+
+          <Route path='/addlocation'>
+            <AddLocation/>
+          </Route>
+
+          <Route path='/carstatus'>
+            <CarStatus/>
+          </Route>
+
+          <Route path='/service'>
+            <Service/>
           </Route>
 
           <Route>

@@ -1,49 +1,34 @@
-import React, { useEffect, useState } from 'react'
-import carinfo from '../images/carinfo.jpg'
+import React, {useEffect, useState} from 'react'
+import carStatus from '../images/carStatus.jpg'
 
-const CarInfo = () => {
+const CarStatus = () => {
 
-    //To retrive the vehicle model
     const [vehicleList, setVehicleList] = useState([]);
     const [selectVehicle,setSelectVehicle] = useState('');
-    const [selectedVehicleDetails, setSelectedVehicleDetails] = useState(null);
 
     const handleChange = (e) => {
         setSelectVehicle(e.target.value)
     }
 
     useEffect(() => {
-      fetch('/api/auth/getvehicleList')
-        .then(res => res.json())
-        .then(data => {
-          if (Array.isArray(data.vehicleList)) {
-            setVehicleList(data.vehicleList);
-          } else {
-            console.log('Vehicle list is not an array:', data);
-          }
-        })
-        .catch(error => console.log(error));
-    }, []);
-
-    const handleShowDetails = () => {
-        if (selectVehicle) {
-          fetch(`/api/auth/getvehicledetails/${selectVehicle}`)
-            .then(res => res.json())
-            .then(data => {
-              setSelectedVehicleDetails(data);
-            })
-            .catch(error => console.log(error));
-        }
-      };
+        fetch('/api/auth/getvehicleList')
+          .then(res => res.json())
+          .then(data => {
+            if (Array.isArray(data.vehicleList)) {
+              setVehicleList(data.vehicleList);
+            } else {
+              console.log('Vehicle list is not an array:', data);
+            }
+          })
+          .catch(error => console.log(error));
+      }, []);
 
 
-      
-    
 
   return (
     <>
-         {/* Navbar  */}
-         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      {/* Navbar  */}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/Dashboard">Ride-In</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -63,41 +48,29 @@ const CarInfo = () => {
             </div>
         </nav> 
 
-
         <section className="signup">
                 <div className="container">
                     <div className="signup-content">
                         <div className="signup-form">
-                            <h2 className="form-title">Car Info</h2>
+                            <h2 className="form-title">Check Car Status</h2>
                             <form method="POST" className="register-form" id="register-form"></form>
                             <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" 
                                     aria-hidden="true" name='selectVehicle' value={selectVehicle} onChange={e => {setSelectVehicle(e.target.value) 
                                     handleChange(e)}} >
                                         <option>Select..</option>
                                         {vehicleList.map(Vehicles =>(   
-                                        <option key={Vehicles._id} value={Vehicles.vehicleNumber} >{Vehicles.vehicleNumber}</option>
+                                        <option key={Vehicles._id} value={Vehicles.model} >{Vehicles.model}</option>
                                         ))}
                                     </select>
-                                    
+
                                 <div className="form-group form-button">
-                                        <input type="submit" name="show" id="show" className="form-submit" value="Show" 
-                                        onClick={handleShowDetails}/>
+                                        <input type="submit" name="show" id="show" className="form-submit" value="Show" />
                                 </div>
-                                
-                                {/* Display selected vehicle details  */}
-                                {selectedVehicleDetails && (
-                                    <div>
-                                      <h2> Vehicle Details</h2>
-                                      <p>Vehicle Number: {selectedVehicleDetails.vehicleNumber}</p>
-                                      <p>Model: {selectedVehicleDetails.model}</p>
-                                    </div>
-                                )}
-                            
                             <form/>
 
                         </div>
                         <div className="signup-image">
-                            <figure><img src={carinfo} alt="sing up image" /></figure>
+                            <figure><img src={carStatus} alt="sing up image" /></figure>
                         </div>
                     </div>
                 </div>
@@ -107,4 +80,4 @@ const CarInfo = () => {
   )
 }
 
-export default CarInfo
+export default CarStatus

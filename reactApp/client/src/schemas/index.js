@@ -32,3 +32,8 @@ const driverSchema = Yup.object({
     cpassword: Yup.string().required().oneOf([Yup.ref('password'), null], "Password must be match"),
 })
 
+export
+const locationSchema = Yup.object({
+    name: Yup.string().required('Location is required')
+})
+

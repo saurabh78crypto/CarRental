@@ -4,7 +4,7 @@ import '../css/Dashboard.css'
 import addCar from '../images/addcar.png'
 import addDriver from '../images/adddriver.png'
 import carRide from '../images/carride.png'
-import route from '../images/route.png'
+import locationImg from '../images/locationImg.jpg'
 import service from '../images/service.png'
 import status from '../images/status.png'
 import carInfo from '../images/carinfo.png'
@@ -92,10 +92,10 @@ const Dashboard = () => {
             </div>
 
             <div className='col-2 m-3 border'>
-                <a href="/AddRoutes"> 
-                <img src={route} alt="" />
+                <a href="/AddLocation"> 
+                <img src={locationImg} alt="" />
                  <div className=' text-center'>
-                    Add Routes
+                    Add Location
                 </div>
                 </a>
             </div>

@@ -1,11 +1,10 @@
 import Driver from "../model/driverSchema";
 import User from "../model/userSchema";
 import Car from "../model/vehicleSchema";
+import Location from "../model/locationSchema";
 const bcrypt = require('bcrypt')
 
-
-//Login
-
+//Login User
 const signin = async (req, res) => {
     try {
         let token;
@@ -14,12 +13,29 @@ const signin = async (req, res) => {
         if (userLogin) {
             await bcrypt.compare(password, userLogin.password);
             token = await userLogin.generateAuthToken();
-    
             res.cookie("loginToken", token, {
                 expires: new Date(Date.now() + 25892000000),//30 days
                 httpOnly: true
             });
+        }    
+    } catch (err) {
+        console.log(err);
+    }
+}
 
+//Login Driver
+const loginDriver = async (req, res) => {
+    try {
+        let token;
+        const { email, password } = req.body;
+        const driverLogin = await Driver.findOne({ email: email });
+        if (driverLogin) {
+            await bcrypt.compare(password, driverLogin.password);
+            token = await driverLogin.generateAuthToken();
+            res.cookie("loginToken", token, {
+                expires: new Date(Date.now() + 25892000000),//30 days
+                httpOnly: true
+            });
         }    
     } catch (err) {
         console.log(err);
@@ -32,7 +48,6 @@ const regUser = async (req, res) => {
         const { name, email, phone, password, cpassword } = req.body.values;
         // Check if User exist or not
         const userExist = await User.findOne({ email: email });
-        console.log(userExist)
         if (userExist != null) {
             res.status(422).json({
                 message: "User Already Registered"
@@ -64,25 +79,20 @@ const regUser = async (req, res) => {
     }
 }
 
-
 //Add Car
 const regVehicle = async (req, res) => {
     try{
         const {vehicleNumber, model} = req.body.values
-        // Check if User exist or not
         const carExist = await Car.findOne({ vehicleNumber: vehicleNumber });
-        console.log(carExist)
         if (carExist != null) {
             res.json({
                 message: "Car Already Registered"
             })
         }
-         // Object for saving in DB
          const carData = new Car({
             vehicleNumber: vehicleNumber,
             model: model
         })
-         // Save method for saving in DB
          const saveCar = await carData.save()
          return res.json({
              statuscode: 200,
@@ -100,18 +110,14 @@ const regVehicle = async (req, res) => {
 const addDriver = async (req, res) => {
     try {
         const { name, email, selectVehicle, phone, password, cpassword } = req.body.values;
-        // Check if User exist or not
         const userExist = await User.findOne({ email: email });
-        console.log(userExist)
         if (userExist != null) {
             res.status(422).json({
                 message: "Driver Already Registered"
             })
         }
-        // Password Hashing
         let hashedPassword = await bcrypt.hash(password, 10);
         let hashedCPassword = await bcrypt.hash(cpassword, 10);
-        // Object for saving in DB
         const data = new Driver({
             name: name,
             email: email,
@@ -120,7 +126,6 @@ const addDriver = async (req, res) => {
             password: hashedPassword,
             cpassword: hashedCPassword
         })
-        // Save method for saving in DB
         const saveUser = await data.save()
         return res.json({
             statuscode: 200,
@@ -134,16 +139,13 @@ const addDriver = async (req, res) => {
     }
 }
 
-
 //Retrieve Vehicle List
 const getvehicleList = async (req,res) => {
     try {
         const vehicleList = await Car.find({  });
-
         return res.json({
             statuscode: 200,
             message: 'Vehicle fetch successfully',
-            //Convert vehicleList in the array 
             vehicleList: Array.isArray(vehicleList) ? vehicleList: []
         })
     } catch (err) {
@@ -157,9 +159,7 @@ const getvehicleList = async (req,res) => {
 // To get vehicleDetais 
 const getVehicleDetails = async (req, res) => {
     try {
-        const vehicleNumber = req.params.vehicleNumber;
-        console.log('-------->',vehicleNumber);
-    
+        const vehicleNumber = req.params.values;
         const cars = await Car.findOne({ vehicleNumber });
         if (!cars) {
           return res.status(404).json({
@@ -172,7 +172,6 @@ const getVehicleDetails = async (req, res) => {
           message: 'Data fetched successfully',
           cars,
         });
-
       } catch (error) {
         return res.status(500).json({
           statuscode: 500,
@@ -181,10 +180,41 @@ const getVehicleDetails = async (req, res) => {
       }
 }
 
+// Create new location 
+const newLocation = async (req, res) => {
+    try {
+        const {name} = req.body.values;
+        const data = new Location({ name: name });
+        const saveLocation = await data.save();
+        return res.json({
+            statuscode: 200,
+            message: 'Data Added Successfully!',
+            data
+        });
+    } catch (error) {
+        return res.status(500).json({
+            statuscode: 500,
+            error: error.message
+        });
+    }
+}
+
+// Access Location
+const getLocation = async (req,res) => {
+    try {
+        const locationList = await Location.find({  });
+        return res.json({
+            statuscode: 200,
+            message: 'Location fetch successfully!',
+            locationList: Array.isArray(locationList) ? locationList: []
+        })
+    } catch (err) {
+        return res.json({
+            statuscode: 400,
+            error: err.message
+        })
+    }
+}
 
 
-
-
-
-
-export { regUser, regVehicle, addDriver, signin, getvehicleList, getVehicleDetails}
+export { regUser, regVehicle, addDriver, signin, loginDriver, getvehicleList, getVehicleDetails, newLocation, getLocation}

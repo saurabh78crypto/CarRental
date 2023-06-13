@@ -4,12 +4,9 @@ import { useFormik } from 'formik'
 import { driverSchema } from '../schemas';
 import { useHistory } from 'react-router-dom'
 
-
 const initialValues = { name: "", email: "", phone: "",selectVehicle:"", password: "", cpassword: "" };
-
 const AddDriver = () => {
   const history =useHistory();
-  
   //To retrieve vehicleNumber from the database
     const [vehicleList, setVehicleList] = useState([]);
     const [selectVehicle,setSelectVehicle] = useState('');
@@ -28,16 +25,10 @@ const AddDriver = () => {
     
   
     //To store data 
-    
-    
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
         validationSchema: driverSchema,
         onSubmit: async (values, action) => {
-
-            // const selectedVehicleNumber = values.selectVehicle;
-            
-
             const res = await fetch('/api/auth/adddriver',
                 {
                     method: 'POST',
@@ -123,10 +114,10 @@ const AddDriver = () => {
 
                                 <div className="form-group">
                                     <label for="cars"><i className="zmdi zmdi-car"></i></label>
-                                    <select class="form-control select2 select2-hidden-accessible  border rounded" style={{width: '100%'}} tabindex="-1" 
+                                    <select class="form-control select2 select2-hidden-accessible  border rounded pl-4" style={{width: '100%'}} tabindex="-1" 
                                     aria-hidden="true" name='selectVehicle' value={selectVehicle} onChange={e => {setSelectVehicle(e.target.value)
                                     handleChange(e)}} >
-                                        <option></option>
+                                        <option>Select..</option>
                                         {vehicleList.map(Vehicles =>(   
                                         <option key={Vehicles._id} value={Vehicles.vehicleNumber} >{Vehicles.vehicleNumber}</option>
                                         ))}

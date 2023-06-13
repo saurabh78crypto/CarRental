@@ -1,31 +1,28 @@
 import React from 'react'
-import loginImg from '../images/login.jpg'
-import { useFormik } from 'formik'
-import {useHistory} from 'react-router-dom'
-import {signInSchema} from '../schemas/index'
+import { useFormik } from "formik";
+import { useHistory } from "react-router-dom";
 
-const initialValues = {email:'', password:''};
-const Login = () => {
-  const history = useHistory();  
-  const {values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
-      initialValues,
-      validationSchema: signInSchema,
-      onSubmit: async (values, action) => {
-          const res = await fetch('http://localhost:3000/api/auth/signin', {
-            method:"POST",
-            headers:{ "Content-Type" : "application/json"},
-            body:JSON.stringify({ values })
-          });
-          const data = res.json();
-          if(res.status === 400 || !data){
-              window.alert("Invalid Credentials");
-          }else{
-            window.alert("Login Successful");
-            history.push('/Dashboard');
+const LoginDriver = () => {
+    const history = useHistory();  
+    const {values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
+        initialValues,
+        validationSchema: signInSchema,
+        onSubmit: async (values, action) => {
+            const res = await fetch('/api/auth/loginDriver', {
+              method:"POST",
+              headers:{ "Content-Type" : "application/json"},
+              body:JSON.stringify({ values })
+            });
+            const data = res.json();
+            if(res.status === 400 || !data){
+                window.alert("Invalid Credentials");
+            }else{
+              window.alert("Login Successful");
+              history.push('/Dashboard');
+            }
           }
-        }
-      })
-    
+        })
+
   return (
     <>
       <section class="sign-in">
@@ -33,11 +30,10 @@ const Login = () => {
           <div class="signin-content">
             <div class="signin-image">
                 <figure><img src={loginImg} alt="sing up image"/></figure>
-                <a href="/reguser" class="signup-image-link">Don't have an account? Register Now!</a>
             </div>
 
             <div class="signin-form">
-              <h2 class="form-title">User Sign In</h2>
+              <h2 class="form-title">Driver Sign In</h2>
               <form method="POST" onSubmit={handleSubmit} class="register-form" id="login-form">
                 <div class="form-group">
                     <label for="email"><i class="zmdi zmdi-account material-icons-email"></i></label>
@@ -71,4 +67,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginDriver
