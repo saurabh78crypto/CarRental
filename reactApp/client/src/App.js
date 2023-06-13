@@ -13,11 +13,16 @@ import TakeRide from './components/TakeRide'
 import AddLocation from './components/AddLocation'
 import CarStatus from './components/CarStatus'
 import Service from './components/Service'
+import Home from './components/Home'
 
 const App = () => {
   return (
     <>
       <Switch>
+
+      <Route path='/'>
+            <Home/>
+          </Route>
 
           <Route path='/login'>
             <Login/>
