@@ -92,7 +92,8 @@ const regVehicle = async (req, res) => {
          const carData = new Car({
             vehicleNumber: vehicleNumber,
             model: model,
-            status: status
+            status: status,
+            owner: req.User._id 
         })
          const saveCar = await carData.save()
          return res.json({

@@ -1,23 +1,15 @@
 import regVechImg from '../images/regvehicle.jpg'
 import React, {useFormik} from 'formik'
-import { useForm } from 'react-hook-form' 
 import {vehicleSchema} from '../schemas'
 import { useHistory } from 'react-router-dom';
 
-const initialValues = { vehicleNumber: "", model: "", status: "" };
+const initialValues = { vehicleNumber: "", model: "", status: "Unavailable" };
 const RegVechile = () => {
-
-    const form = useForm({
-        defaultValues:{
-            status: "Unavailable"
-        },
-    });
-
     const history = useHistory();
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik ({
         initialValues,
         validationSchema: vehicleSchema,
-        onSubmit: async (values, action) => {
+        onSubmit: async (values,action) => {
             const res = await fetch('http://localhost:3000/api/auth/regvehicle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -83,7 +75,7 @@ const RegVechile = () => {
                             </div>
 
                             <div className="form-group">
-                                <label for="status"><i className="zmdi zmdi-car"></i></label>
+                                <label for="status"><i className="zmdi zmdi-block"></i></label>
                                 <input type="text" name="status" id="status"
                                 disabled 
                                 value={values.status}
