@@ -20,9 +20,9 @@ const App = () => {
     <>
       <Switch>
 
-      <Route path='/'>
+      {/* <Route path='/'>
             <Home/>
-          </Route>
+          </Route> */}
 
           <Route path='/login'>
             <Login/>

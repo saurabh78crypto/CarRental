@@ -19,7 +19,7 @@ export
 const vehicleSchema = Yup.object({
     vehicleNumber: Yup.string().required('Vehicle number is required!'),
     model: Yup.string().required('Model is required!'),
-   
+    status: Yup.string(),
 })
 
 export 

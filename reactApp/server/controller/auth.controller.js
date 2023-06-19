@@ -82,7 +82,7 @@ const regUser = async (req, res) => {
 //Add Car
 const regVehicle = async (req, res) => {
     try{
-        const {vehicleNumber, model} = req.body.values
+        const {vehicleNumber, model,status} = req.body.values
         const carExist = await Car.findOne({ vehicleNumber: vehicleNumber });
         if (carExist != null) {
             res.json({
@@ -91,7 +91,8 @@ const regVehicle = async (req, res) => {
         }
          const carData = new Car({
             vehicleNumber: vehicleNumber,
-            model: model
+            model: model,
+            status: status
         })
          const saveCar = await carData.save()
          return res.json({

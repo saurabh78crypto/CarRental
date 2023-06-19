@@ -1,10 +1,18 @@
 import regVechImg from '../images/regvehicle.jpg'
 import React, {useFormik} from 'formik'
+import { useForm } from 'react-hook-form' 
 import {vehicleSchema} from '../schemas'
 import { useHistory } from 'react-router-dom';
 
-const initialValues = { vehicleNumber: "", model: "" };
+const initialValues = { vehicleNumber: "", model: "", status: "" };
 const RegVechile = () => {
+
+    const form = useForm({
+        defaultValues:{
+            status: "Unavailable"
+        },
+    });
+
     const history = useHistory();
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik ({
         initialValues,
@@ -72,6 +80,17 @@ const RegVechile = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder="Your Vehicle Model"/>
+                            </div>
+
+                            <div className="form-group">
+                                <label for="status"><i className="zmdi zmdi-car"></i></label>
+                                <input type="text" name="status" id="status"
+                                disabled 
+                                value={values.status}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                
+                                />
                             </div>
                             
                             <div className="form-group form-button">
