@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken');
 
 const vehicleSchema = new mongoose.Schema({
     vehicleNumber:{
@@ -13,10 +14,10 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
+    // owner: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User'
+    // },
     tokens: [
         {
             token:{

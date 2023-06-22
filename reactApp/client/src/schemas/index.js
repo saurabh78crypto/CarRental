@@ -37,3 +37,10 @@ const locationSchema = Yup.object({
     name: Yup.string().required('Location is required')
 })
 
+export
+const rideSchema = Yup.object({
+    selectFromLocation: Yup.string().required('Selection is required'),
+    selectToLocation: Yup.string().required('Selection is required'),
+    selectVehicle: Yup.string().required('Selection is required'),
+})
+

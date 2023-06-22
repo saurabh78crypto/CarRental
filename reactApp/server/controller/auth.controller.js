@@ -2,6 +2,7 @@ import Driver from "../model/driverSchema";
 import User from "../model/userSchema";
 import Car from "../model/vehicleSchema";
 import Location from "../model/locationSchema";
+import Ride from "../model/rideSchema";
 const bcrypt = require('bcrypt')
 
 //Login User
@@ -93,7 +94,7 @@ const regVehicle = async (req, res) => {
             vehicleNumber: vehicleNumber,
             model: model,
             status: status,
-            owner: req.User._id 
+            // owner: req.User._id 
         })
          const saveCar = await carData.save()
          return res.json({
@@ -202,9 +203,9 @@ const newLocation = async (req, res) => {
 }
 
 // Access Location
-const getLocation = async (req,res) => {
+const getLocationList = async (req,res) => {
     try {
-        const locationList = await Location.find({  });
+        const locationList = await Location.find({ });
         return res.json({
             statuscode: 200,
             message: 'Location fetch successfully!',
@@ -218,5 +219,27 @@ const getLocation = async (req,res) => {
     }
 }
 
+//New Ride 
+const newRide = async (req, res) => {
+    try{
+        const {selectFromLocation, selectToLocation, selectVehicle} = req.body;
+        const data = new Ride({
+            selectFromLocation: selectFromLocation,
+            selectToLocation: selectToLocation,
+            selectVehicle: selectVehicle
+        });
+        const saveRide = await data.save();
+        return res.json({
+            statuscode: 200,
+            message: "Data Added Successfully"
+        })
+    }catch(err){
+        return res.json({
+            statuscode: 500,
+            error: err.message
+        })
+    }
+}
 
-export { regUser, regVehicle, addDriver, signin, loginDriver, getvehicleList, getVehicleDetails, newLocation, getLocation}
+
+export { regUser, regVehicle, addDriver, signin, loginDriver, getvehicleList, getVehicleDetails, newLocation, getLocationList, newRide}

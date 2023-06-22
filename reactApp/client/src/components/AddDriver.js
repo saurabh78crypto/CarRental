@@ -28,7 +28,7 @@ const AddDriver = () => {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
         validationSchema: driverSchema,
-        onSubmit: async (values, action) => {
+        onSubmit: async (values) => {
             const res = await fetch('/api/auth/adddriver',
                 {
                     method: 'POST',
@@ -36,11 +36,9 @@ const AddDriver = () => {
                     body: JSON.stringify({ values,  selectVehicle })
                 });
                 const data = await res.json();
-                console.log(selectVehicle)
                 if (data) {
                     window.alert("Driver Registered Successfully!");
                     history.push('/Dashboard');
-                    // action.resetForm();
                   } else {
                     window.alert("Registration Failed!");
                   }
