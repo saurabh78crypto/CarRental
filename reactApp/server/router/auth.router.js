@@ -1,5 +1,5 @@
 import express from "express";
-import { regUser, regVehicle, addDriver, signin, getvehicleList, getVehicleDetails, newLocation, getLocationList, newRide } from "../controller/auth.controller";
+import { regUser, regVehicle, addDriver, signin, getvehicleList, getVehicleDetails, newLocation, getLocationList, newRide, loginDriver } from "../controller/auth.controller";
 
 const auth = express.Router()
 
@@ -10,6 +10,7 @@ auth.get('/getlocationList',getLocationList)
 
 //POST
 auth.post('/login', signin)
+auth.post('/loginDriver',loginDriver)
 auth.post('/reguser', regUser)
 auth.post('/regvehicle',regVehicle)
 auth.post('/adddriver',addDriver)

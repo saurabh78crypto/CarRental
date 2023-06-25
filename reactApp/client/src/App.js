@@ -14,6 +14,7 @@ import AddLocation from './components/AddLocation'
 import CarStatus from './components/CarStatus'
 import Service from './components/Service'
 import Home from './components/Home'
+import LoginDriver from './components/LoginDriver'
 
 const App = () => {
   return (
@@ -26,6 +27,10 @@ const App = () => {
 
           <Route path='/login'>
             <Login/>
+          </Route>
+
+          <Route path='/'>
+            <LoginDriver/>
           </Route>
 
           <Route path='/dashboard'>

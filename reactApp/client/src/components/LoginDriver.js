@@ -1,12 +1,15 @@
 import React from 'react'
 import { useFormik } from "formik";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { loginDriverSchema } from '../schemas';
+import loginDriverImg from '../images/loginDriverImg.jpg'
 
+const initialValues = {email:'', password:''};
 const LoginDriver = () => {
-    const history = useHistory();  
+    //  const history = useHistory();  
     const {values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
         initialValues,
-        validationSchema: signInSchema,
+        validationSchema: loginDriverSchema,
         onSubmit: async (values, action) => {
             const res = await fetch('/api/auth/loginDriver', {
               method:"POST",
@@ -18,7 +21,7 @@ const LoginDriver = () => {
                 window.alert("Invalid Credentials");
             }else{
               window.alert("Login Successful");
-              history.push('/Dashboard');
+              //  history.push('/');
             }
           }
         })
@@ -29,7 +32,7 @@ const LoginDriver = () => {
         <div class="container">
           <div class="signin-content">
             <div class="signin-image">
-                <figure><img src={loginImg} alt="sing up image"/></figure>
+                <figure><img src={loginDriverImg} alt="sing up image"/></figure>
             </div>
 
             <div class="signin-form">

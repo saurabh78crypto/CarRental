@@ -15,6 +15,12 @@ const signInSchema =Yup.object({
     password: Yup.string().min(6).required("Password is required!"),
 })
 
+export 
+const loginDriverSchema =Yup.object({
+    email: Yup.string().email().required("Email is required!"),
+    password: Yup.string().min(6).required("Password is required!"),
+})
+
 export
 const vehicleSchema = Yup.object({
     vehicleNumber: Yup.string().required('Vehicle number is required!'),
